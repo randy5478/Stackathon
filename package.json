@@ -1,5 +1,5 @@
 {
-  "name": "boilermaker",
+  "name": "Stackathon",
   "version": "2.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
@@ -61,7 +61,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.3.1",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "victory": "^35.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
