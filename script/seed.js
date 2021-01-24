@@ -9,27 +9,16 @@ async function seed() {
 
   const allStats = await Promise.all([
     AllStats.create({
-      HP: 8,
-      Energy: 8,
-      Wisdom: 2,
-      Speed: 1,
-      Strength: 1,
-      Date: '2021-1-20'
-    }),
-    AllStats.create({
-      HP: 7,
-      Energy: 6,
-      Wisdom: 1,
-      Speed: 1,
-      Strength: 1,
-      Date: '2021-1-21'
-    }),
-    AllStats.create({
       HP: 0,
       Energy: 0,
       Wisdom: 0,
       Speed: 0,
       Strength: 0,
+      RatioHP: 0,
+      RatioEnergy: 0,
+      RatioWisdom: 0,
+      RatioSpeed: 0,
+      RatioStrength: 0,
       Date: '2021-1-22'
     })
   ])

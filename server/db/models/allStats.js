@@ -27,6 +27,31 @@ const AllStats = db.define('allStats', {
     allowNull: false,
     DefaultValue: 0
   },
+  RatioHP: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    DefaultValue: 0
+  },
+  RatioEnergy: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    DefaultValue: 0
+  },
+  RatioWisdom: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    DefaultValue: 0
+  },
+  RatioSpeed: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    DefaultValue: 0
+  },
+  RatioStrength: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    DefaultValue: 0
+  },
   Date: {
     type: Sequelize.STRING,
     allowNull: false

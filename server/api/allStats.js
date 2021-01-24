@@ -23,8 +23,9 @@ router.get('/:date', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/:date', async (req, res, next) => {
   try {
+    console.log('%%%%%%', req.bodu)
     await AllStats.create(req.body)
   } catch (err) {
     next(err)
@@ -34,7 +35,7 @@ router.post('/', async (req, res, next) => {
 router.put('/:date', async (req, res, next) => {
   try {
     console.log('Params--->', req.params.date)
-    console.log('Body--->', req.body)
+    console.log('Body---------->', req.body)
     const updateAllStats = await AllStats.findOne({
       where: {
         Date: req.params.date
