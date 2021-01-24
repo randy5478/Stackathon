@@ -3,6 +3,11 @@ import {connect} from 'react-redux'
 import {
   checkDate,
   postNewDay,
+  statHp,
+  statEnergy,
+  statWisdom,
+  statSpeed,
+  statStrength,
   updateStatHP,
   updateStatEnergy,
   updateStatWisdom,
@@ -18,15 +23,6 @@ import {
   VictoryLabel
 } from 'victory'
 
-const characterData = [{hp: 7, energy: 6, wisdom: 0.5, speed: 15, strength: 20}]
-const testdata = [
-  {x: 'hp', y: 0.7},
-  {x: 'energy', y: 0.75},
-  {x: 'wisdom', y: 0.25},
-  {x: 'speed', y: 0.5},
-  {x: 'strength', y: 0.33}
-]
-const ciel = {hp: 10, energy: 8, wisdom: 2, speed: 30, strength: 30}
 const upToDate = new Date()
 const currDate = `${upToDate.getFullYear()}-${upToDate.getMonth() +
   1}-${upToDate.getDate()}`
@@ -42,6 +38,7 @@ class AllStats extends Component {
   }
 
   componentDidMount() {
+    console.log('MOUNTED')
     this.props.checkDate(currDate)
   }
 
@@ -50,46 +47,58 @@ class AllStats extends Component {
     this.props.updateStatHP(
       currDate,
       evt.target.HP.value,
-      this.props.date.allStats
+      this.props.myStats.allStats.date
     )
+    this.props.statHp(evt.target.HP.value)
   }
   handleSubmitEnergy(evt) {
     evt.preventDefault()
     this.props.updateStatEnergy(
       currDate,
       evt.target.energy.value,
-      this.props.date.allStats
+      this.props.myStats.allStats.date
     )
+    this.props.statEnergy(evt.target.energy.value)
   }
   handleSubmitWisdom(evt) {
     evt.preventDefault()
     this.props.updateStatWisdom(
       currDate,
       evt.target.wisdom.value,
-      this.props.date.allStats
+      this.props.myStats.allStats.date
     )
+    this.props.statWisdom(evt.target.wisdom.value)
   }
   handleSubmitSpeed(evt) {
     evt.preventDefault()
     this.props.updateStatSpeed(
       currDate,
       evt.target.speed.value,
-      this.props.date.allStats
+      this.props.myStats.allStats.date
     )
+    this.props.statSpeed(evt.target.speed.value)
   }
   handleSubmitStrength(evt) {
     evt.preventDefault()
     this.props.updateStatStrength(
       currDate,
       evt.target.strength.value,
-      this.props.date.allStats
+      this.props.myStats.allStats.date
     )
+    this.props.statStrength(evt.target.strength.value)
   }
 
   render() {
-    console.log('STATE!:', this.props)
-    if (this.props.date.allStats === null) {
+    console.log('DATA', this.props.myStats.allStats.date)
+    console.log('TODAYS DATE', currDate)
+    if (this.props.myStats.allStats.date === null) {
+      console.log('DATE IS NULL')
       this.props.postNewDay(currDate)
+    }
+    const {date} = this.props.myStats.allStats
+    const ceil = {hp: 100, energy: 7, wisdom: 60, speed: 30, strength: 45}
+    if (this.props.myStats.allStats.date === null) {
+      return <div>Loading your Stats</div>
     }
     return (
       <div>
@@ -103,9 +112,17 @@ class AllStats extends Component {
               colorScale={['red']}
               style={{data: {fillOpacity: 0.2, strokeWidth: 2}}}
             >
-              <VictoryArea data={testdata} />
+              <VictoryArea
+                data={[
+                  {x: 'hp', y: date.RatioHP / 100},
+                  {x: 'energy', y: date.RatioEnergy / 7},
+                  {x: 'wisdom', y: date.RatioWisdom / 60},
+                  {x: 'speed', y: date.RatioSpeed / 30},
+                  {x: 'strength', y: date.RatioStrength / 45}
+                ]}
+              />
             </VictoryGroup>
-            {Object.keys(ciel).map((key, i) => {
+            {Object.keys(ceil).map((key, i) => {
               return (
                 <VictoryPolarAxis
                   key={i}
@@ -121,7 +138,7 @@ class AllStats extends Component {
                   labelPlacement="perpendicular"
                   axisValue={i + 1}
                   label={key}
-                  tickFormat={t => Math.ceil(t * ciel[key])}
+                  tickFormat={t => Math.ceil(t * ceil[key])}
                   tickValues={[0.25, 0.5, 0.75, 1]}
                 />
               )
@@ -137,18 +154,18 @@ class AllStats extends Component {
           </VictoryChart>
         </div>
         <div>
-          <form onSubmit={this.handleSubmitHP}>
-            <label htmlFor="HP">
-              <small>HP</small>
-            </label>
-            <input name="HP" type="text" />
-            <button>Power Up</button>
-          </form>
           <form onSubmit={this.handleSubmitEnergy}>
             <label htmlFor="energy">
               <small>Energy</small>
             </label>
             <input name="energy" type="text" />
+            <button>Power Up</button>
+          </form>
+          <form onSubmit={this.handleSubmitHP}>
+            <label htmlFor="HP">
+              <small>HP</small>
+            </label>
+            <input name="HP" type="text" />
             <button>Power Up</button>
           </form>
           <form onSubmit={this.handleSubmitWisdom}>
@@ -180,7 +197,7 @@ class AllStats extends Component {
 
 const mapState = state => {
   return {
-    date: state
+    myStats: state
   }
 }
 
@@ -191,6 +208,21 @@ const mapDispatch = dispatch => {
     },
     postNewDay(date) {
       dispatch(postNewDay(date))
+    },
+    statHp(value) {
+      dispatch(statHp(value))
+    },
+    statEnergy(value) {
+      dispatch(statEnergy(value))
+    },
+    statWisdom(value) {
+      dispatch(statWisdom(value))
+    },
+    statSpeed(value) {
+      dispatch(statSpeed(value))
+    },
+    statStrength(value) {
+      dispatch(statStrength(value))
     },
     updateStatHP(date, input, allStats) {
       dispatch(updateStatHP(date, input, allStats))
@@ -211,26 +243,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(AllStats)
-
-{
-  /* <div>
-  <label htmlFor="HP">
-    <small>HP</small>
-  </label>
-    <button
-        type="button"
-        onClick={() => {
-        }}
-      >
-        -
-      </button>
-      <input name="HP" type="text" />
-      <button
-        type="button"
-        onClick={() => {
-        }}
-      >
-        +
-      </button>
-</div> */
-}
