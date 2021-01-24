@@ -45,8 +45,8 @@ class AllStats extends Component {
     evt.preventDefault()
     this.props.updateStatHP(
       currDate,
-      evt.target.HP.value,
-      this.props.myStats.allStats.date
+      parseInt(evt.target.HP.value),
+      parseInt(this.props.myStats.allStats.date.HP)
     )
   }
   handleSubmitEnergy(evt) {
@@ -61,28 +61,29 @@ class AllStats extends Component {
     evt.preventDefault()
     this.props.updateStatWisdom(
       currDate,
-      evt.target.wisdom.value,
-      this.props.myStats.allStats.date
+      parseInt(evt.target.wisdom.value),
+      parseInt(this.props.myStats.allStats.date.Wisdom)
     )
   }
   handleSubmitSpeed(evt) {
     evt.preventDefault()
     this.props.updateStatSpeed(
       currDate,
-      evt.target.speed.value,
-      this.props.myStats.allStats.date
+      parseInt(evt.target.speed.value),
+      parseInt(this.props.myStats.allStats.date.Speed)
     )
   }
   handleSubmitStrength(evt) {
     evt.preventDefault()
     this.props.updateStatStrength(
       currDate,
-      evt.target.strength.value,
-      this.props.myStats.allStats.date
+      parseInt(evt.target.strength.value),
+      parseInt(this.props.myStats.allStats.date.Strength)
     )
   }
 
   render() {
+    console.log(this.props)
     const {date} = this.props.myStats.allStats
     const ceil = {hp: 100, energy: 7, wisdom: 60, speed: 30, strength: 45}
     if (this.props.myStats.allStats.date === null) {

@@ -65,20 +65,14 @@ export const postNewDay = date => {
   }
 }
 
-export const updateStatHP = (date, input, allStats) => {
+export const updateStatHP = (date, input, dbStat) => {
   return async dispatch => {
     try {
       dispatch(statHp(input))
       let HPRVal
-      const inputInt = parseInt(input)
-      const allStatHPInt = parseInt(allStats.HP)
-      if (inputInt + allStatHPInt > 100) {
-        HPRVal = 100
-      } else {
-        HPRVal = inputInt + allStatHPInt
-      }
+      input + dbStat > 100 ? (HPRVal = 100) : (HPRVal = input + dbStat)
       await axios.put(`/api/allStats/${date}`, {
-        HP: inputInt + allStatHPInt,
+        HP: input + dbStat,
         RatioHP: HPRVal
       })
     } catch (error) {
@@ -86,7 +80,7 @@ export const updateStatHP = (date, input, allStats) => {
     }
   }
 }
-export const updateStatEnergy = (date, input, allStats) => {
+export const updateStatEnergy = (date, input, dbStat) => {
   return async dispatch => {
     try {
       dispatch(statEnergy(input))
@@ -110,20 +104,14 @@ export const updateStatEnergy = (date, input, allStats) => {
     }
   }
 }
-export const updateStatWisdom = (date, input, allStats) => {
+export const updateStatWisdom = (date, input, dbStat) => {
   return async dispatch => {
     try {
       dispatch(statWisdom(input))
       let WisdomRVal
-      const inputInt = parseInt(input)
-      const allStatWisdomInt = parseInt(allStats.Wisdom)
-      if (inputInt + allStatWisdomInt > 60) {
-        WisdomRVal = 60
-      } else {
-        WisdomRVal = inputInt + allStatWisdomInt
-      }
+      input + dbStat > 60 ? (WisdomRVal = 60) : (WisdomRVal = input + dbStat)
       await axios.put(`/api/allStats/${date}`, {
-        Wisdom: inputInt + allStatWisdomInt,
+        Wisdom: input + dbStat,
         RatioWisdom: WisdomRVal
       })
     } catch (error) {
@@ -131,20 +119,14 @@ export const updateStatWisdom = (date, input, allStats) => {
     }
   }
 }
-export const updateStatSpeed = (date, input, allStats) => {
+export const updateStatSpeed = (date, input, dbStat) => {
   return async dispatch => {
     try {
       dispatch(statSpeed(input))
       let SpeedRVal
-      const inputInt = parseInt(input)
-      const allStatSpeedInt = parseInt(allStats.Speed)
-      if (inputInt + allStatSpeedInt > 30) {
-        SpeedRVal = 30
-      } else {
-        SpeedRVal = inputInt + allStatSpeedInt
-      }
+      input + dbStat > 30 ? (SpeedRVal = 30) : (SpeedRVal = input + dbStat)
       await axios.put(`/api/allStats/${date}`, {
-        Speed: inputInt + allStatSpeedInt,
+        Speed: input + dbStat,
         RatioSpeed: SpeedRVal
       })
     } catch (error) {
@@ -152,20 +134,16 @@ export const updateStatSpeed = (date, input, allStats) => {
     }
   }
 }
-export const updateStatStrength = (date, input, allStats) => {
+export const updateStatStrength = (date, input, dbStat) => {
   return async dispatch => {
     try {
       dispatch(statStrength(input))
       let StrengthRVal
-      const inputInt = parseInt(input)
-      const allStatStrengthInt = parseInt(allStats.Strength)
-      if (inputInt + allStatStrengthInt > 45) {
-        StrengthRVal = 45
-      } else {
-        StrengthRVal = inputInt + allStatStrengthInt
-      }
+      input + dbStat > 45
+        ? (StrengthRVal = 45)
+        : (StrengthRVal = input + dbStat)
       await axios.put(`/api/allStats/${date}`, {
-        Strength: inputInt + allStatStrengthInt,
+        Strength: input + dbStat,
         RatioStrength: StrengthRVal
       })
     } catch (error) {
@@ -178,8 +156,7 @@ export const updateStatStrength = (date, input, allStats) => {
  * INITIAL STATE
  */
 const initialState = {
-  date: {},
-  statRatio: {}
+  date: {}
 }
 
 /**
@@ -190,16 +167,13 @@ export default function(state = initialState, action) {
     case GET_DATE:
       return {...state, date: action.date}
     case STAT_HP:
+      let updateHP = action.value + state.date.HP
       let updateHPR
-      let valHpInt = parseInt(action.value)
-      let dateHpInt = parseInt(state.date.HP)
-      let updateHP = valHpInt + dateHpInt
       updateHP > 100 ? (updateHPR = 100) : (updateHPR = updateHP)
       return {...state, date: {...state.date, HP: updateHP, RatioHP: updateHPR}}
     case STAT_ENERGY:
-      let updateEnergyR
       let valEnergyInt = parseInt(action.value)
-      console.log('!!!!!!!!!', valEnergyInt > 15)
+      let updateEnergyR
       if (valEnergyInt > 15) {
         updateEnergyR = 0
       } else if (valEnergyInt > 9) {
@@ -218,30 +192,24 @@ export default function(state = initialState, action) {
         date: {...state.date, Energy: valEnergyInt, RatioEnergy: updateEnergyR}
       }
     case STAT_WISDOM:
+      let updateWisdom = action.value + state.date.Wisdom
       let updateWisdomR
-      let valWisdomInt = parseInt(action.value)
-      let dateWisdomInt = parseInt(state.date.Wisdom)
-      let updateWisdom = valWisdomInt + dateWisdomInt
       updateWisdom > 60 ? (updateWisdomR = 60) : (updateWisdomR = updateWisdom)
       return {
         ...state,
         date: {...state.date, Wisdom: updateWisdom, RatioWisdom: updateWisdomR}
       }
     case STAT_SPEED:
+      let updateSpeed = action.value + state.date.Speed
       let updateSpeedR
-      let valSpeedInt = parseInt(action.value)
-      let dateSpeedInt = parseInt(state.date.Speed)
-      let updateSpeed = valSpeedInt + dateSpeedInt
       updateSpeed > 30 ? (updateSpeedR = 30) : (updateSpeedR = updateSpeed)
       return {
         ...state,
         date: {...state.date, Speed: updateSpeed, RatioSpeed: updateSpeedR}
       }
     case STAT_STRENGTH:
+      let updateStrength = action.value + state.date.Strength
       let updateStrengthR
-      let valStrengthInt = parseInt(action.value)
-      let dateStrengthInt = parseInt(state.date.Strength)
-      let updateStrength = valStrengthInt + dateStrengthInt
       updateStrength > 45
         ? (updateStrengthR = 45)
         : (updateStrengthR = updateStrength)
