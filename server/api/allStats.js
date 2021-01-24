@@ -25,7 +25,7 @@ router.get('/:date', async (req, res, next) => {
 
 router.post('/:date', async (req, res, next) => {
   try {
-    console.log('%%%%%%', req.bodu)
+    console.log('%%%%%%', req.body)
     await AllStats.create(req.body)
   } catch (err) {
     next(err)
