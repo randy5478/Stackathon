@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {
   checkDate,
+  fetchYesterday,
   postNewDay,
   statHp,
   statEnergy,
@@ -24,8 +25,10 @@ import {
 } from 'victory'
 
 const upToDate = new Date()
-const currDate = `${upToDate.getFullYear()}-${upToDate.getMonth() +
-  1}-${upToDate.getDate()}`
+const yesterday = new Date(upToDate)
+yesterday.setDate(yesterday.getDate() - 1)
+const currDate = upToDate.toDateString()
+const yestDate = yesterday.toDateString()
 
 class AllStats extends Component {
   constructor(props) {
@@ -39,6 +42,7 @@ class AllStats extends Component {
 
   componentDidMount() {
     this.props.checkDate(currDate)
+    this.props.fetchYesterday(yestDate)
   }
 
   handleSubmitHP(evt) {
@@ -84,7 +88,7 @@ class AllStats extends Component {
 
   render() {
     console.log(this.props)
-    const {date} = this.props.myStats.allStats
+    const {date, yesterdayDate} = this.props.myStats.allStats
     const ceil = {hp: 100, energy: 7, wisdom: 60, speed: 30, strength: 45}
     if (this.props.myStats.allStats.date === null) {
       this.props.postNewDay(currDate)
@@ -102,7 +106,7 @@ class AllStats extends Component {
             domain={{y: [0, 1]}}
           >
             <VictoryGroup
-              colorScale={['red']}
+              colorScale={['red', 'lightBlue']}
               style={{data: {fillOpacity: 0.2, strokeWidth: 2}}}
             >
               <VictoryArea
@@ -112,6 +116,15 @@ class AllStats extends Component {
                   {x: 'wisdom', y: date.RatioWisdom / 60},
                   {x: 'speed', y: date.RatioSpeed / 30},
                   {x: 'strength', y: date.RatioStrength / 45}
+                ]}
+              />
+              <VictoryArea
+                data={[
+                  {x: 'hp', y: yesterdayDate.RatioHP / 100},
+                  {x: 'energy', y: yesterdayDate.RatioEnergy / 7},
+                  {x: 'wisdom', y: yesterdayDate.RatioWisdom / 60},
+                  {x: 'speed', y: yesterdayDate.RatioSpeed / 30},
+                  {x: 'strength', y: yesterdayDate.RatioStrength / 45}
                 ]}
               />
             </VictoryGroup>
@@ -198,6 +211,9 @@ const mapDispatch = dispatch => {
   return {
     checkDate(date) {
       dispatch(checkDate(date))
+    },
+    fetchYesterday(date) {
+      dispatch(fetchYesterday(date))
     },
     postNewDay(date) {
       dispatch(postNewDay(date))

@@ -5,6 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_DATE = 'GET_DATE'
+const GET_YESTERDAY = 'GET_YESTERDAY'
 const STAT_HP = 'STAT_HP'
 const STAT_ENERGY = 'STAT_ENERGY'
 const STAT_WISDOM = 'STAT_WISDOM'
@@ -16,6 +17,10 @@ const STAT_STRENGTH = 'STAT_STRENGTH'
  */
 export const getDate = date => ({
   type: GET_DATE,
+  date
+})
+export const getYesterday = date => ({
+  type: GET_YESTERDAY,
   date
 })
 export const statHp = value => ({
@@ -48,6 +53,17 @@ export const checkDate = date => {
       console.log('RUNNING checkDate!')
       const res = await axios.get(`/api/allStats/${date}`)
       dispatch(getDate(res.data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+export const fetchYesterday = date => {
+  return async dispatch => {
+    try {
+      console.log('RUNNING getYesterday!')
+      const res = await axios.get(`/api/allStats/${date}`)
+      dispatch(getYesterday(res.data))
     } catch (error) {
       console.error(error)
     }
@@ -156,7 +172,8 @@ export const updateStatStrength = (date, input, dbStat) => {
  * INITIAL STATE
  */
 const initialState = {
-  date: {}
+  date: {},
+  yesterdayDate: {}
 }
 
 /**
@@ -166,6 +183,8 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case GET_DATE:
       return {...state, date: action.date}
+    case GET_YESTERDAY:
+      return {...state, yesterdayDate: action.date}
     case STAT_HP:
       let updateHP = action.value + state.date.HP
       let updateHPR
