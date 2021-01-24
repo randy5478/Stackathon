@@ -46,7 +46,7 @@ export const checkDate = date => {
   return async dispatch => {
     try {
       console.log('RUNNING checkDate!')
-      const res = await axios.get(`/api/allStats/`)
+      const res = await axios.get(`/api/allStats/${date}`)
       dispatch(getDate(res.data))
     } catch (error) {
       console.error(error)
@@ -57,19 +57,7 @@ export const postNewDay = date => {
   return async dispatch => {
     try {
       console.log('RUNNING POSTDate!')
-      const res = await axios.post(`/api/allStats/${date}`, {
-        HP: 0,
-        Energy: 0,
-        Wisdom: 0,
-        Speed: 0,
-        Strength: 0,
-        RatioHP: 0,
-        RatioEnergy: 0,
-        RatioWisdom: 0,
-        RatioSpeed: 0,
-        RatioStrength: 0,
-        Date: date
-      })
+      const res = await axios.post(`/api/allStats/${date}`, {Date: date})
       dispatch(getDate(res.data))
     } catch (error) {
       console.error(error)
@@ -80,6 +68,7 @@ export const postNewDay = date => {
 export const updateStatHP = (date, input, allStats) => {
   return async dispatch => {
     try {
+      dispatch(statHp(input))
       let HPRVal
       const inputInt = parseInt(input)
       const allStatHPInt = parseInt(allStats.HP)
@@ -92,8 +81,6 @@ export const updateStatHP = (date, input, allStats) => {
         HP: inputInt + allStatHPInt,
         RatioHP: HPRVal
       })
-      // const res = await axios.get(`/api/allStats/${date}`)
-      // dispatch(getDate(res.data))
     } catch (error) {
       console.error(error)
     }
@@ -102,6 +89,7 @@ export const updateStatHP = (date, input, allStats) => {
 export const updateStatEnergy = (date, input, allStats) => {
   return async dispatch => {
     try {
+      dispatch(statEnergy(input))
       let EnergyRVal
       const inputInt = parseInt(input)
       if (inputInt > 15) {
@@ -125,6 +113,7 @@ export const updateStatEnergy = (date, input, allStats) => {
 export const updateStatWisdom = (date, input, allStats) => {
   return async dispatch => {
     try {
+      dispatch(statWisdom(input))
       let WisdomRVal
       const inputInt = parseInt(input)
       const allStatWisdomInt = parseInt(allStats.Wisdom)
@@ -145,6 +134,7 @@ export const updateStatWisdom = (date, input, allStats) => {
 export const updateStatSpeed = (date, input, allStats) => {
   return async dispatch => {
     try {
+      dispatch(statSpeed(input))
       let SpeedRVal
       const inputInt = parseInt(input)
       const allStatSpeedInt = parseInt(allStats.Speed)
@@ -165,6 +155,7 @@ export const updateStatSpeed = (date, input, allStats) => {
 export const updateStatStrength = (date, input, allStats) => {
   return async dispatch => {
     try {
+      dispatch(statStrength(input))
       let StrengthRVal
       const inputInt = parseInt(input)
       const allStatStrengthInt = parseInt(allStats.Strength)

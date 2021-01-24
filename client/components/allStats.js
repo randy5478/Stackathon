@@ -38,7 +38,6 @@ class AllStats extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNTED')
     this.props.checkDate(currDate)
   }
 
@@ -49,7 +48,6 @@ class AllStats extends Component {
       evt.target.HP.value,
       this.props.myStats.allStats.date
     )
-    this.props.statHp(evt.target.HP.value)
   }
   handleSubmitEnergy(evt) {
     evt.preventDefault()
@@ -58,7 +56,6 @@ class AllStats extends Component {
       evt.target.energy.value,
       this.props.myStats.allStats.date
     )
-    this.props.statEnergy(evt.target.energy.value)
   }
   handleSubmitWisdom(evt) {
     evt.preventDefault()
@@ -67,7 +64,6 @@ class AllStats extends Component {
       evt.target.wisdom.value,
       this.props.myStats.allStats.date
     )
-    this.props.statWisdom(evt.target.wisdom.value)
   }
   handleSubmitSpeed(evt) {
     evt.preventDefault()
@@ -76,7 +72,6 @@ class AllStats extends Component {
       evt.target.speed.value,
       this.props.myStats.allStats.date
     )
-    this.props.statSpeed(evt.target.speed.value)
   }
   handleSubmitStrength(evt) {
     evt.preventDefault()
@@ -85,18 +80,15 @@ class AllStats extends Component {
       evt.target.strength.value,
       this.props.myStats.allStats.date
     )
-    this.props.statStrength(evt.target.strength.value)
   }
 
   render() {
-    console.log('DATA', this.props.myStats.allStats.date)
-    console.log('TODAYS DATE', currDate)
-    if (this.props.myStats.allStats.date === null) {
-      console.log('DATE IS NULL')
-      this.props.postNewDay(currDate)
-    }
     const {date} = this.props.myStats.allStats
     const ceil = {hp: 100, energy: 7, wisdom: 60, speed: 30, strength: 45}
+    if (this.props.myStats.allStats.date === null) {
+      this.props.postNewDay(currDate)
+      window.location.reload()
+    }
     if (this.props.myStats.allStats.date === null) {
       return <div>Loading your Stats</div>
     }
