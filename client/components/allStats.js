@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {
   checkDate,
-  fetchYesterday,
+  fetchOtherDay,
   postNewDay,
   statHp,
   statEnergy,
@@ -42,7 +42,7 @@ class AllStats extends Component {
 
   componentDidMount() {
     this.props.checkDate(currDate)
-    this.props.fetchYesterday(yestDate)
+    this.props.fetchOtherDay(yestDate, 2)
   }
 
   handleSubmitHP(evt) {
@@ -87,14 +87,16 @@ class AllStats extends Component {
   }
 
   render() {
-    console.log(this.props)
+    console.log('--------_>', this.props.myStats.allStats.date.HP)
+    console.log('--------_>', this.props)
     const {date, yesterdayDate} = this.props.myStats.allStats
     const ceil = {hp: 100, energy: 7, wisdom: 60, speed: 30, strength: 45}
     if (this.props.myStats.allStats.date === null) {
       this.props.postNewDay(currDate)
       window.location.reload()
     }
-    if (this.props.myStats.allStats.date === null) {
+    const loaded = Object.keys(date).length > 0
+    if (loaded === false) {
       return <div>Loading your Stats</div>
     }
     return (
@@ -212,8 +214,8 @@ const mapDispatch = dispatch => {
     checkDate(date) {
       dispatch(checkDate(date))
     },
-    fetchYesterday(date) {
-      dispatch(fetchYesterday(date))
+    fetchOtherDay(date, value) {
+      dispatch(fetchOtherDay(date, value))
     },
     postNewDay(date) {
       dispatch(postNewDay(date))
