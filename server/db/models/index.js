@@ -1,5 +1,6 @@
 // const User = require('./user')
 const AllStats = require('./allStats')
+const IndivStat = require('./indivStat')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -16,5 +17,6 @@ const AllStats = require('./allStats')
  */
 module.exports = {
   // User,
-  AllStats
+  AllStats,
+  IndivStat
 }
