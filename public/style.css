@@ -24,7 +24,7 @@ form div {
   align-items: center;
   padding: 4rem;
   margin: 0rem;
-  color: rgb(235, 45, 86);
+  color: white;
   /* background-color:lightseagreen; */
   background-image: url('titleImage.jpeg');
 }
@@ -77,6 +77,24 @@ nav a {
 }
 .allStatsClickButton {
   border-radius: 10px;
+}
+.BtnEnergy {
+  border: 2px solid rgb(238, 214, 28);
+}
+.BtnWisdom {
+  border: 2px solid rgb(77, 206, 197);
+}
+.BtnHP {
+  border: 2px solid rgb(238, 86, 86);
+}
+.BtnStrength {
+  border: 2px solid rgb(96, 73, 242);
+}
+.BtnSpeed {
+  border: 2px solid rgb(92, 210, 101);
+}
+.allStatsButtonInput {
+  color: gray;
 }
 .indivTitle {
   margin: 0rem;

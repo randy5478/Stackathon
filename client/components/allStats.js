@@ -88,7 +88,7 @@ class AllStats extends Component {
 
   render() {
     const {date, yesterdayDate} = this.props.myStats.allStats
-    const ceil = {hp: 100, energy: 7, wisdom: 60, speed: 30, strength: 45}
+    const ceil = {HP: 100, Energy: 7, Wisdom: 60, Speed: 30, Strength: 45}
     if (this.props.myStats.allStats.date === null) {
       this.props.postNewDay(currDate)
       window.location.reload()
@@ -136,12 +136,20 @@ class AllStats extends Component {
                   key={i}
                   dependentAxis
                   style={{
-                    axisLabel: {padding: 20},
+                    axisLabel: {padding: 30},
                     axis: {stroke: 'none'},
                     grid: {stroke: 'grey', strokeWidth: 0.25, opacity: 0.5}
                   }}
                   tickLabelComponent={
-                    <VictoryLabel labelPlacement="vertical" />
+                    <VictoryLabel
+                      text="Today:Red  Yesterday:Blue"
+                      textAnchor="middle"
+                      verticalAnchor="middle"
+                      x={320}
+                      y={10}
+                      style={{fontSize: 9}}
+                      labelPlacement="vertical"
+                    />
                   }
                   labelPlacement="perpendicular"
                   axisValue={i + 1}
@@ -166,15 +174,25 @@ class AllStats extends Component {
             <label htmlFor="energy">
               <medium>Energy</medium>
             </label>
-            <input name="energy" type="text" />
-            <button className="allStatsClickButton">Power Up</button>
+            <input
+              className="allStatsButtonInput"
+              name="energy"
+              placeholder="Hours"
+              type="text"
+            />
+            <button className="allStatsClickButton BtnEnergy">Power Up</button>
           </form>
           <form onSubmit={this.handleSubmitWisdom} className="WisdomBtn">
             <label htmlFor="wisdom">
               <medium>Wisdom</medium>
             </label>
-            <input name="wisdom" type="text" />
-            <button className="allStatsClickButton">Power Up</button>
+            <input
+              className="allStatsButtonInput"
+              name="wisdom"
+              placeholder="Minutes"
+              type="text"
+            />
+            <button className="allStatsClickButton BtnWisdom">Power Up</button>
           </form>
         </div>
         <div className="allStatsButtonMiddle">
@@ -182,8 +200,13 @@ class AllStats extends Component {
             <label htmlFor="HP">
               <medium>HP</medium>
             </label>
-            <input name="HP" type="text" />
-            <button className="allStatsClickButton">Power Up</button>
+            <input
+              className="allStatsButtonInput"
+              name="HP"
+              placeholder="Ounces"
+              type="text"
+            />
+            <button className="allStatsClickButton BtnHP">Power Up</button>
           </form>
         </div>
         <div className="allStatsButtonBottom">
@@ -191,15 +214,27 @@ class AllStats extends Component {
             <label htmlFor="strength">
               <medium>Strength</medium>
             </label>
-            <input name="strength" type="text" />
-            <button className="allStatsClickButton">Power Up</button>
+            <input
+              className="allStatsButtonInput"
+              name="strength"
+              placeholder="Minutes"
+              type="text"
+            />
+            <button className="allStatsClickButton BtnStrength">
+              Power Up
+            </button>
           </form>
           <form onSubmit={this.handleSubmitSpeed} className="SpeedBtn">
             <label htmlFor="speed">
               <medium>Speed</medium>
             </label>
-            <input name="speed" type="text" />
-            <button className="allStatsClickButton">Power Up</button>
+            <input
+              className="allStatsButtonInput"
+              name="speed"
+              placeholder="Minutes"
+              type="text"
+            />
+            <button className="allStatsClickButton BtnSpeed">Power Up</button>
           </form>
         </div>
       </div>
