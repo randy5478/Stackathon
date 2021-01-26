@@ -41,8 +41,8 @@ class AllStats extends Component {
   }
 
   componentDidMount() {
-    this.props.checkDate(currDate)
     this.props.fetchOtherDay(yestDate, 2)
+    this.props.checkDate(currDate)
   }
 
   handleSubmitHP(evt) {
@@ -87,28 +87,28 @@ class AllStats extends Component {
   }
 
   render() {
-    console.log('--------_>', this.props.myStats.allStats.date.HP)
-    console.log('--------_>', this.props)
     const {date, yesterdayDate} = this.props.myStats.allStats
     const ceil = {hp: 100, energy: 7, wisdom: 60, speed: 30, strength: 45}
     if (this.props.myStats.allStats.date === null) {
       this.props.postNewDay(currDate)
       window.location.reload()
     }
-    const loaded = Object.keys(date).length > 0
-    if (loaded === false) {
+    // const loaded = Object.keys(date).length > 0
+    if (this.props.myStats.allStats.date === null) {
       return <div>Loading your Stats</div>
     }
     return (
       <div>
-        <div>
+        <div className="allStatsChartContainer">
           <VictoryChart
+            className="allStatsChart"
             polar
+            animate={{duration: 1000}}
             theme={VictoryTheme.material}
             domain={{y: [0, 1]}}
           >
             <VictoryGroup
-              colorScale={['red', 'lightBlue']}
+              colorScale={['#eb2d56', 'lightBlue']}
               style={{data: {fillOpacity: 0.2, strokeWidth: 2}}}
             >
               <VictoryArea
@@ -161,41 +161,45 @@ class AllStats extends Component {
             />
           </VictoryChart>
         </div>
-        <div>
-          <form onSubmit={this.handleSubmitEnergy}>
+        <div className="allStatsButtonTop">
+          <form onSubmit={this.handleSubmitEnergy} className="EnergyBtn">
             <label htmlFor="energy">
-              <small>Energy</small>
+              <medium>Energy</medium>
             </label>
             <input name="energy" type="text" />
-            <button>Power Up</button>
+            <button className="allStatsClickButton">Power Up</button>
           </form>
-          <form onSubmit={this.handleSubmitHP}>
-            <label htmlFor="HP">
-              <small>HP</small>
-            </label>
-            <input name="HP" type="text" />
-            <button>Power Up</button>
-          </form>
-          <form onSubmit={this.handleSubmitWisdom}>
+          <form onSubmit={this.handleSubmitWisdom} className="WisdomBtn">
             <label htmlFor="wisdom">
-              <small>Wisdom</small>
+              <medium>Wisdom</medium>
             </label>
             <input name="wisdom" type="text" />
-            <button>Power Up</button>
+            <button className="allStatsClickButton">Power Up</button>
           </form>
-          <form onSubmit={this.handleSubmitSpeed}>
-            <label htmlFor="speed">
-              <small>Speed</small>
+        </div>
+        <div className="allStatsButtonMiddle">
+          <form onSubmit={this.handleSubmitHP} className="HPBtn">
+            <label htmlFor="HP">
+              <medium>HP</medium>
             </label>
-            <input name="speed" type="text" />
-            <button>Power Up</button>
+            <input name="HP" type="text" />
+            <button className="allStatsClickButton">Power Up</button>
           </form>
-          <form onSubmit={this.handleSubmitStrength}>
+        </div>
+        <div className="allStatsButtonBottom">
+          <form onSubmit={this.handleSubmitStrength} className="StrengthBtn">
             <label htmlFor="strength">
-              <small>Strength</small>
+              <medium>Strength</medium>
             </label>
             <input name="strength" type="text" />
-            <button>Power Up</button>
+            <button className="allStatsClickButton">Power Up</button>
+          </form>
+          <form onSubmit={this.handleSubmitSpeed} className="SpeedBtn">
+            <label htmlFor="speed">
+              <medium>Speed</medium>
+            </label>
+            <input name="speed" type="text" />
+            <button className="allStatsClickButton">Power Up</button>
           </form>
         </div>
       </div>

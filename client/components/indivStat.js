@@ -68,24 +68,26 @@ class IndivStat extends Component {
       description
     } = this.props.myStats.allStats
     const ceil = {HP: 100, Energy: 7, Wisdom: 60, Speed: 30, Strength: 45}
-    console.log('---->', typeof date[`Ratio${this.props.match.params.stat}`])
-    console.log('====>', typeof ceil[this.props.match.params.stat])
     const loaded = Object.keys(sevenDate).length > 0
     if (loaded === false) {
       return <div>Loading your Stats</div>
     }
     return (
       <div>
-        <h1>My {this.props.match.params.stat} Stat</h1>
-        <div>
+        <h1 className="indivTitle">My {this.props.match.params.stat} Stat</h1>
+        <div className="indivWeekGraphContainer">
           <VictoryChart
+            className="indivWeekGraph"
             theme={VictoryTheme.material}
             containerComponent={<VictoryVoronoiContainer />}
+            animate={{duration: 1000}}
             domainPadding={{x: 0, y: 0}}
+            width={550}
+            height={300}
           >
             <VictoryLine
               style={{
-                data: {stroke: 'red'}
+                data: {stroke: '#eb2d56'}
               }}
               labels={({datum}) => `y: ${datum.y}`}
               labelComponent={<VictoryTooltip style={{fontSize: 10}} />}
@@ -117,6 +119,14 @@ class IndivStat extends Component {
                 {x: 'Today', y: date[this.props.match.params.stat]}
               ]}
             />
+            <VictoryLabel
+              text={`Weekly ${this.props.match.params.stat} Progress`}
+              textAnchor="middle"
+              verticalAnchor="middle"
+              x={280}
+              y={10}
+              style={{fontSize: 20}}
+            />
             <VictoryScatter
               data={[
                 {x: 1, y: sevenDate[this.props.match.params.stat]},
@@ -131,65 +141,74 @@ class IndivStat extends Component {
             />
           </VictoryChart>
         </div>
-        <div>
-          <h3>Today's {this.props.match.params.stat} Level</h3>
-          <svg viewBox="0 0 400 400" width="100%" height="100%">
-            <VictoryPie
-              standalone={false}
-              animate={{duration: 1000}}
-              width={400}
-              height={400}
-              data={[
-                {
-                  x: 1,
-                  y:
-                    date[`Ratio${this.props.match.params.stat}`] /
-                    ceil[this.props.match.params.stat] *
-                    100
-                },
-                {
-                  x: 2,
-                  y:
-                    date[`Ratio${this.props.match.params.stat}`] /
-                    (100 - ceil[this.props.match.params.stat]) *
-                    100
-                }
-              ]}
-              innerRadius={120}
-              cornerRadius={25}
-              labels={() => null}
-              style={{
-                data: {
-                  fill: ({datum}) => {
-                    const color = datum.y > 30 ? 'green' : 'red'
-                    return datum.x === 1 ? color : 'transparent'
-                  }
-                }
-              }}
-            />
-            <VictoryAnimation duration={1000}>
-              {() => {
-                return (
-                  <VictoryLabel
-                    textAnchor="middle"
-                    verticalAnchor="middle"
-                    x={200}
-                    y={200}
-                    text={`${Math.round(
+        <div className="todayStatContainer">
+          <div className="indivDayGraph">
+            <h3 className="DayGraphTitle">
+              Today's {this.props.match.params.stat} Level
+            </h3>
+            <svg viewBox="0 0 400 400" width="100%" height="100%">
+              <VictoryPie
+                standalone={false}
+                animate={{duration: 1000}}
+                width={400}
+                height={400}
+                data={[
+                  {
+                    x: 1,
+                    y:
+                      date[`Ratio${this.props.match.params.stat}`] /
+                      ceil[this.props.match.params.stat] *
+                      100
+                  },
+                  {
+                    x: 2,
+                    y:
+                      100 -
                       date[`Ratio${this.props.match.params.stat}`] /
                         ceil[this.props.match.params.stat] *
                         100
-                    )}%`}
-                    style={{fontSize: 45}}
-                  />
-                )
-              }}
-            </VictoryAnimation>
-          </svg>
-        </div>
-        <div>
-          <h4>Description</h4>
-          <div>{description}</div>
+                  }
+                ]}
+                innerRadius={120}
+                cornerRadius={25}
+                labels={() => null}
+                style={{
+                  data: {
+                    fill: ({datum}) => {
+                      const color = datum.y > 50 ? '#82e5f3' : '#eb2d56'
+                      return datum.x === 1 ? color : 'transparent'
+                    }
+                  }
+                }}
+              />
+              <VictoryAnimation
+                duration={2000}
+                data={{
+                  percent:
+                    date[`Ratio${this.props.match.params.stat}`] /
+                    ceil[this.props.match.params.stat] *
+                    100
+                }}
+              >
+                {state => {
+                  return (
+                    <VictoryLabel
+                      textAnchor="middle"
+                      verticalAnchor="middle"
+                      x={200}
+                      y={200}
+                      text={`${Math.round(state.percent)}%`}
+                      style={{fontSize: 45}}
+                    />
+                  )
+                }}
+              </VictoryAnimation>
+            </svg>
+          </div>
+          <div className="indivDescription">
+            <h4>Description</h4>
+            <div>{description}</div>
+          </div>
         </div>
       </div>
     )

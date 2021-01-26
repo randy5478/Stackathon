@@ -1,21 +1,125 @@
+html,
 body {
+  height: 100%;
+  width: 100%;
   font-family: sans-serif;
+  color: #222;
+  background-color: lightgray;
 }
-
 a {
   text-decoration: none;
 }
-
 label {
   display: block;
 }
-
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-
 form div {
   margin: 1em;
   display: inline-block;
+}
+/* Title and Navbar */
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  margin: 0rem;
+  color: rgb(235, 45, 86);
+  /* background-color:lightseagreen; */
+  background-image: url('titleImage.jpeg');
+}
+.navbar {
+  background-color: rgb(128, 128, 128) !important;
+  padding: 0.8rem;
+}
+nav a {
+  display: inline-block;
+  margin: 1em;
+  color: #222;
+}
+
+/* All Stats */
+.allStatsChartContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* align-items: flex-end; */
+  height: 40em;
+  padding: 1rem;
+  margin: 1rem;
+}
+.allStatsButtonTop {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  margin: 0;
+  height: 5rem;
+}
+.allStatsButtonMiddle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* align-items: center; */
+  /* align-content: center; */
+  margin: 0;
+  height: 5em;
+}
+.allStatsButtonBottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-bottom: 3rem;
+  align-content: center;
+  margin: 0rem;
+  height: 5rem;
+}
+.allStatsClickButton {
+  border-radius: 10px;
+}
+.indivTitle {
+  margin: 0rem;
+}
+.indivWeekGraphContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  /* align-items: flex-end; */
+  height: 40em;
+  padding: 0rem;
+  margin: 0rem;
+}
+.indivWeekGraph {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  /* align-items: flex-end; */
+  height: 40em;
+  padding: 0rem;
+  margin: 0rem;
+}
+.todayStatContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  height: 20em;
+  padding: 1rem;
+  margin: 1rem;
+}
+.indivDayGraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 40em;
+  padding: 1rem;
+  margin: 1rem;
+}
+.DayGraphTitle {
+  margin: 0rem;
+}
+.indivDescription {
+  margin: 0rem;
 }
