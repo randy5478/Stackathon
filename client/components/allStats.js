@@ -177,7 +177,7 @@ class AllStats extends Component {
             <input
               className="allStatsButtonInput"
               name="energy"
-              placeholder="Hours"
+              placeholder="Hours of Sleep"
               type="text"
             />
             <button className="allStatsClickButton BtnEnergy">Power Up</button>
@@ -189,7 +189,7 @@ class AllStats extends Component {
             <input
               className="allStatsButtonInput"
               name="wisdom"
-              placeholder="Minutes"
+              placeholder="Minutes of Studying"
               type="text"
             />
             <button className="allStatsClickButton BtnWisdom">Power Up</button>
@@ -203,7 +203,7 @@ class AllStats extends Component {
             <input
               className="allStatsButtonInput"
               name="HP"
-              placeholder="Ounces"
+              placeholder="Ounces of Water"
               type="text"
             />
             <button className="allStatsClickButton BtnHP">Power Up</button>
@@ -217,7 +217,7 @@ class AllStats extends Component {
             <input
               className="allStatsButtonInput"
               name="strength"
-              placeholder="Minutes"
+              placeholder="Minutes of Str Training"
               type="text"
             />
             <button className="allStatsClickButton BtnStrength">
@@ -231,7 +231,7 @@ class AllStats extends Component {
             <input
               className="allStatsButtonInput"
               name="speed"
-              placeholder="Minutes"
+              placeholder="Minutes of Cardio"
               type="text"
             />
             <button className="allStatsClickButton BtnSpeed">Power Up</button>
